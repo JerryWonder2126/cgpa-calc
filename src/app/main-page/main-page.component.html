@@ -1,0 +1,15 @@
+<header class="container-fluid">
+    <h1 class="primary">CGPA Calculator</h1>
+</header>
+<main class="container">
+    <section class="row upper-row">
+        <app-course-form class="col col-12 col-sm-6"></app-course-form>
+        <app-cgpa-view (scaleChange)="updateScale($event)" [cgpaScale]="cgpaScale" class=" col col-12 col-sm-6"></app-cgpa-view>
+    </section>
+    <section class="row">
+        <app-course-list></app-course-list>
+    </section>
+</main>
+<footer>
+    <span>&copy;2020 webdev_wonder</span>
+</footer>

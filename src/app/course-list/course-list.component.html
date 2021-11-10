@@ -1,0 +1,22 @@
+<mat-card  class='view-courses'>
+    <div class="container course-card-header">
+        <div class="row">
+            <div class="col-6">
+                <h3 class="course-title">Course Code</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="course-unit">Unit</h3>
+            </div>
+            <div class="col">
+                <h3 class="course-grade">Grade</h3>
+            </div>
+        </div>
+    </div>
+    <mat-card-content *ngIf="courseList">
+        <div class="container w-100">
+            <div *ngFor="let course of courseList">
+                <app-course-item-card (xButtonClicked)="deleteCourse(course)" [course]="course"></app-course-item-card>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

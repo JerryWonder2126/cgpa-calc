@@ -1,0 +1,56 @@
+@import "~@angular/material/theming";
+@import "../../../styles.scss";
+
+.course-card {
+    position: relative;
+    
+    border-bottom: 2px solid yellow;
+    padding-top: 12px;
+
+    &:hover {
+        cursor: pointer;
+        background-color: darken(white, 5%);
+        border-bottom: 2px solid mat-color($cgpa-calc-accent);
+        transition: background-color 0.2s ease-out, transform 0.2s ease-out, box-shadow 0.3s ease-out;
+        box-shadow: 2px 2px 3px;
+        & .delete-icon {
+            opacity: 1;
+            transform: scale(1);
+        }
+    }
+
+    & .col {
+        display: flex;
+        align-items: center;
+    } 
+
+    & .delete-icon {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        right: 0;
+        top: 0;
+        border-radius: 50%;
+        width: 2em;
+        height: 2em;
+        margin-top: -1em;
+        max-width: 35px;
+        max-height: 35px;
+        background-color: mat-color($cgpa-calc-warn);
+        color: white;
+        cursor: pointer;
+
+        transform: scale(0);
+
+        transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+
+        opacity: 0;
+
+        &:hover {
+            transform: scale(1.2);
+            box-shadow: 2px 2px 3px;
+            transition: box-shadow 0.2s ease-out, transform 0.2s ease-out;
+        }
+    }
+}

@@ -1,0 +1,27 @@
+@import "~@angular/material/theming";
+@import '../../styles.scss';
+
+header {
+    min-height: 10vh;
+    width: 100%;
+    background-color: mat-color($cgpa-calc-primary);
+    box-shadow: 5px 3px 6px mat-color($cgpa-calc-accent);
+}
+
+main {
+    min-height: 80vh;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    & .upper-row {
+        max-width: 800px;
+    }
+}
+
+footer {
+    min-height: 10vh;
+    background-color: mat-color($cgpa-calc-accent);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

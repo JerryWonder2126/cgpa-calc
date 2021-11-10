@@ -1,0 +1,18 @@
+<mat-card class="cgpa-card">
+    <h5>CGPA</h5>
+    <h2>{{ cgpa }}</h2>
+    <div class="grade-box">
+        <div class="row">
+            <div class="col-4">
+                <span>Grading System: </span>
+            </div>
+            <div class="col grade-inner-box">
+                <mat-button-toggle-group name="gradingSystem" (change)="changeScale($event)" #grade='matButtonToggleGroup' aria-label="Favorite Color">
+                    <mat-button-toggle value="four" [checked]="cgpaScale==='four'">Four</mat-button-toggle>
+                    <mat-button-toggle value="five">Five</mat-button-toggle>
+                    <mat-button-toggle value="seven">Seven</mat-button-toggle>
+                </mat-button-toggle-group>
+            </div>
+        </div>
+    </div>
+</mat-card>

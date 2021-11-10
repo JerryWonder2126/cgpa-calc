@@ -1,0 +1,25 @@
+.cgpa-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+
+    & h5{
+        font-size: 20px;
+    }
+    & h2 {
+        font-size: 40px;
+        margin-top: 1.0em;
+        margin-bottom: 1.0em;
+    }
+    & .grade-box {
+        width: 100%;
+        & .grade-inner-box {
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    }
+}

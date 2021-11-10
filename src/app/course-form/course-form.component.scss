@@ -1,0 +1,9 @@
+.form-card {
+    margin-top: 1.0em;
+    margin-bottom: 1.0em;
+    
+    & form {
+        justify-content: center;
+        align-items: center;
+    }
+}
