@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DataSource } from "@angular/cdk/collections";
 import { Observable, ReplaySubject } from 'rxjs';
 import { CourseService } from '../course.service';
+import { CourseItem } from '../shared/models/course-item';
 
 @Component({
   selector: 'app-main-page',
@@ -10,59 +11,120 @@ import { CourseService } from '../course.service';
 })
 export class MainPageComponent implements OnInit {
 
-  displayedColumns: string[] = ['position', 'course title', 'grade'];
-  dataToDisplay = [...ELEMENT_DATA];
+  courseList!: CourseItem[];
+  cgpaScale: string = 'four';
+  cgpa!: number;
+  gradeRange: string = 'pass';
+  
+  private WEIGHT = {
+    four: {
+      scale: 4,
+      weight: { seventy: 4, sixty: 3, fifty: 2, forty_five: 1}
+    },
+    five: {
+      scale: 5,
+      weight: { seventy: 5,   sixty: 4, fifty: 3, fourty_five: 2, forty: 1}
+    },
+    seven: {
+      scale: 7,
+      weight: { seventy: 7, sixty_five: 6,  sixty: 5, fifty_five: 4, fifty: 3, fourty_five: 2, forty: 1}
+    }
+  }
 
-  dataSource = new ExampleDataSource(this.dataToDisplay);
-
-  cgpaScale!: string;
+  RANGES = {
+    four: [[3.5, 'first class'], [3.0, 'second class upper'], [2.0, 'second class lower'], [1.0, 'third class']],
+    five: [[4.5, 'first class'], [3.5, 'second class upper'], [2.5, 'second class lower'], [1.5, 'third class']],
+    seven: [[6.0, 'first class'], [3.5, 'second class upper'], [2.4, 'second class lower'], [1.5, 'third class']],
+  }
 
   constructor(private courseService: CourseService) { }
 
   ngOnInit(): void {
     this.courseService.loadAll();
-    this.cgpaScale = 'four';
+    this.courseList = this.courseService.courses;
+    this.updateCGPA();
+  }
+  
+  refreshCourseList() {
+    this.courseList = this.courseService.courses;
+    this.updateCGPA();
   }
 
-  updateScale = (updatedScale: string) => {
-    this.cgpaScale = updatedScale;
-  };
-
-}
-
-export interface PeriodicElement {
-  title: string;
-  position: number;
-  grade: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, title: 'Hydrogen', grade: 1.0079},
-  {position: 2, title: 'Helium', grade: 4.0026},
-  {position: 3, title: 'Metrology Mechanical Laboratory Studies', grade: 6.941},
-  {position: 4, title: 'Beryllium', grade: 9.0122},
-  {position: 5, title: 'Boron', grade: 10.811},
-  {position: 6, title: 'Carbon', grade: 12.0107},
-  {position: 7, title: 'Nitrogen', grade: 14.0067},
-  {position: 8, title: 'Oxygen', grade: 15.9994},
-  {position: 9, title: 'Fluorine', grade: 18.9984},
-];
-
-class ExampleDataSource extends DataSource<PeriodicElement> {
-  private _dataStream = new ReplaySubject<PeriodicElement[]>();
-
-  constructor(initialData: PeriodicElement[]) {
-    super();
-    this.setData(initialData);
+  weight() {
+    if(this.cgpaScale === 'four') {
+      return this.WEIGHT['four'];
+    }else if(this.cgpaScale === 'five'){
+      return this.WEIGHT['five'];
+    }else{
+      return this.WEIGHT['seven'];
+    }
   }
 
-  connect(): Observable<PeriodicElement[]> {
-    return this._dataStream;
+  getScoreString(weight: any, score: number): any {
+    if(score >= 70) return weight.seventy;
+    else if(score >= 65 && weight.sixty_five) return weight.sixty_five;
+    else if(score >= 60) return weight.sixty;
+    else if(score >= 55 && weight.fifty_five) return weight.fifty_five;
+    else if(score >= 50) return weight.fifty;
+    else if(score >= 45 && weight.forty_five) return weight.forty_five;
+    else if(score >= 40 && weight.forty) return weight.forty;
+    else return 0;
   }
 
-  disconnect() {}
-
-  setData(data: PeriodicElement[]) {
-    this._dataStream.next(data);
+  calculate() {
+    let totalWeight: number = 0;
+    let totalUnit: number = 0;
+    let weight = this.weight();
+    let setScore: number;
+    
+    if(this.courseList.length) {
+      this.courseList.forEach((course) => {
+        totalUnit += course.unit;
+        setScore = this.getScoreString(weight.weight, course.grade);
+        totalWeight += course.unit * setScore;
+      });
+    }
+    let cgpa = totalWeight/totalUnit;
+    return cgpa ? Number(cgpa.toPrecision(3)) : 0;
   }
+
+  updateCGPA() {
+    this.cgpa = this.calculate();
+    this.setGradeRange(this.cgpa);
+  }
+
+  changeScale(scale: any) {
+    this.cgpaScale = scale;
+    this.updateCGPA();
+  }
+
+  clearCourseList() {
+    this.courseService.reset();
+    this.refreshCourseList();
+  }
+
+  getRange() {
+    if(this.cgpaScale === 'four') {
+      return this.RANGES.four;
+    }else if(this.cgpaScale === 'five') {
+      return this.RANGES.five;
+    }else if(this.cgpaScale === 'seven') {
+      return this.RANGES.seven;
+    }else{
+      return '';
+    }
+  }
+
+  setGradeRange(cgpa: number) {
+    let range: any = this.getRange();
+    range = new Array(...range);
+    range.some((element: any) => {
+      if(cgpa >= element[0]) {
+        this.gradeRange = element[1];
+        return true;
+      }
+      return false;
+    });
+  }
+
 }

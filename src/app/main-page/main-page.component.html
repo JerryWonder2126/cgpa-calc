@@ -3,12 +3,17 @@
 </header>
 <main class="container">
     <section class="row upper-row">
-        <app-course-form class="col col-12 col-sm-6"></app-course-form>
-        <app-cgpa-view (scaleChange)="updateScale($event)" [cgpaScale]="cgpaScale" class=" col col-12 col-sm-6"></app-cgpa-view>
+        <app-course-form (onAlter)="refreshCourseList()" class="col col-12 col-sm-6"></app-course-form>
+        <app-cgpa-view (scaleChange)="changeScale($event)" [gradeRange]="gradeRange" [cgpa]="cgpa" [cgpaScale]="cgpaScale" class="col col-12 col-sm-6"></app-cgpa-view>
     </section>
     <section class="row">
-        <app-course-list></app-course-list>
+        <app-course-list (onUpdate)="refreshCourseList()" [courseList]="courseList"></app-course-list>
     </section>
+    <div *ngIf="courseList.length" class="row">
+        <div class="col">
+            <button mat-raised-button (click)="clearCourseList()" color="primary">Clear List</button>
+        </div>
+    </div>
 </main>
 <footer>
     <span>&copy;2020 webdev_wonder</span>

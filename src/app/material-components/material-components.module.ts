@@ -4,6 +4,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatInputModule } from "@angular/material/input";
 import { MatTableModule } from "@angular/material/table";
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatButtonModule} from '@angular/material/button';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 
 
@@ -15,6 +16,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatInputModule,
     MatTableModule,
     MatDialogModule,
+    MatButtonModule,
     MatButtonToggleModule,
   ]
 })
