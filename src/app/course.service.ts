@@ -29,6 +29,14 @@ export class CourseService {
     return this._courses;
   }
 
+  taken_names = () => {
+    let names: string[] = [];
+    this._courses.forEach((course) => {
+      names.push(course.code);
+    });
+    return names;
+  }
+
   add(formItem: IFormItem): void {
     let newCourse: ICourseItem = {id: this.nextID(), ...formItem};
     this._courses.push(newCourse);
@@ -37,16 +45,17 @@ export class CourseService {
 
   update(id: number, updatedItem: FormItem): boolean{
     let courseItem = this.getCourseById(id) ? {id, ...updatedItem} : false;
-    if(!courseItem) {
+    if(courseItem) {
+      this._courses = this._courses.map((course) => {
+        if((course.id === id) && (this.taken_names().indexOf(updatedItem.code) === -1)) {
+            course = {id, ...updatedItem};
+        }
+        return course;
+      });
+      return this.save();
+    }else{
       return false;
     }
-    this._courses = this._courses.map((course) => {
-      if(course.id === id) {
-        course = {id, ...updatedItem};
-      }
-      return course;
-    });
-    return this.save();
   }
 
   delete(id: number) {

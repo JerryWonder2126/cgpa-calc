@@ -35,17 +35,19 @@ export class CourseFormComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    let form_item: FormItem = form.value;
-    if(this.isNew) {
-      if (!this.courseCodeExists(form_item.code)){
-        this.courseService.add(form_item);
-        form.reset();
+      let form_item: FormItem = form.value;
+      if (form.valid) { 
+      if(this.isNew) {
+        if (!this.courseCodeExists(form_item.code)){
+          this.courseService.add(form_item);
+          form.reset();
+        }
+      }else{
+        this.courseService.update(this.id, form_item);
+        this.dialogRef.close();
       }
-    }else{
-      this.courseService.update(this.id, form_item);
-      this.dialogRef.close();
+      this.onAlter.emit();
     }
-    this.onAlter.emit();
   }
 
 }

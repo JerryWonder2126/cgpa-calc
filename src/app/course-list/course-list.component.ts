@@ -14,6 +14,7 @@ export class CourseListComponent implements OnInit {
 
   @Input() courseList!: ICourseItem[];
   @Output() onUpdate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() clear: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private courseService: CourseService, public dialog: MatDialog) { }
 

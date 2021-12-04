@@ -1,3 +1,5 @@
+@import "~@angular/material/theming";
+@import "../../styles.scss";
 
 .view-courses{
     max-width: 520px;
@@ -11,8 +13,24 @@
         margin-bottom: 12px;
         
         & h3 {
-            margin: none;
-            font-weight: 700;
+            font-weight: 500;
+            text-transform: uppercase;
         }
     }
+
+    & .clear-btn {
+        width: 100%;
+        margin-top: 1em;
+        height: 3em;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: darken(mat-color($mat-primary), 10%);
+        }
+    }
+}
+
+.mat-card {
+    background-color: darken(mat-color($mat-primary), 40%);
+    color: darken(white, 20%);
 }

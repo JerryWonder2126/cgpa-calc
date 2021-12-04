@@ -1,9 +1,46 @@
+@import "~@angular/material/theming";
+@import "../../styles.scss";
+
 .form-card {
     margin-top: 1.0em;
     margin-bottom: 1.0em;
+
+    & h3 {
+        text-transform: uppercase;
+        font-weight: 500;
+    }
     
     & form {
         justify-content: center;
         align-items: center;
     }
+
+    & .course-field, & .submit-btn {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+
+    & .submit-btn {
+        height: 3em;
+        text-transform: uppercase;
+
+        &:hover {
+            background-color: darken(mat-color($mat-primary), 40%);
+            color: white;
+        }
+    }
+}
+
+.mat-card {
+    background-color: mat-color($mat-primary);
+    border: 16px solid darken(mat-color($mat-primary), 40%);
+    border-radius: 2em;
+    color: darken(white, 10%);
+    height: 310px;
+    width: 100%;
+}
+
+.mat-form-field-label-wrapper{
+    color: darken(white, 10%);
 }

@@ -1,26 +1,38 @@
-<mat-card class="form-card">
-    <mat-card-header>
-        <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>Add a course</mat-card-title>
-    </mat-card-header>
+<mat-card color="primary" class="form-card">
+    <mat-card-title>
+        <h3 *ngIf="isNew">Add a course</h3>
+        <h3 *ngIf="!isNew">Edit course</h3>
+    </mat-card-title>
     <mat-card-content>
         <form #courseForm="ngForm" (ngSubmit)="onSubmit(courseForm)" class="">
-            <mat-form-field class="">
-              <mat-label>Course Code</mat-label>
-              <input matInput placeholder="Enter course code" name="code" type="text" [(ngModel)]="formItem.code" required>
-            </mat-form-field>
-
-            <mat-form-field class="">
-                <mat-label>Grade</mat-label>
-                <input matInput placeholder="Enter your grade" name="grade" type="number" min="0" max="100" [(ngModel)]="formItem.grade" required>
-            </mat-form-field>
-
-            <mat-form-field class="">
-                <mat-label>Unit</mat-label>
-                <input matInput placeholder="Enter course unit" name="unit" type="number" min="1" [(ngModel)]="formItem.unit" required>
-            </mat-form-field>
-
-            <button class="accent" type="submit">Add</button>
+            <div class="container">
+                <div class="row g-1">
+                    <div class="col col-12 p-0">
+                        <mat-form-field color="accent" class="course-field" appearance='outline'>
+                            <mat-label>Course Code</mat-label>
+                            <input matInput fill='outline' placeholder="Enter course code" name="code" type="text" [(ngModel)]="formItem.code" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-6">
+                        <mat-form-field color="accent" class="course-field" appearance='outline'>
+                            <mat-label>Grade</mat-label>
+                            <input matInput fill='outline' placeholder="Enter your grade" name="grade" type="number" min="0" max="100" [(ngModel)]="formItem.grade" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-6">
+                        <mat-form-field color="accent" class="course-field" appearance='outline'>
+                            <mat-label>Unit</mat-label>
+                            <input matInput placeholder="Enter course unit" name="unit" type="number" min="1" [(ngModel)]="formItem.unit" required>
+                        </mat-form-field>
+                    </div>
+                    <div class="col col-12 p-0">
+                        <button mat-raised-button class="submit-btn" type="submit">
+                            <span *ngIf="isNew">Add</span> 
+                            <span *ngIf="!isNew">Update</span> 
+                        </button>
+                    </div>
+                </div>
+            </div>
           </form>
     </mat-card-content>
 </mat-card>

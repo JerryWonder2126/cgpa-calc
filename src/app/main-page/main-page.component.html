@@ -1,20 +1,20 @@
-<header class="container-fluid">
-    <h1 class="primary">CGPA Calculator</h1>
-</header>
-<main class="container">
-    <section class="row upper-row">
-        <app-course-form (onAlter)="refreshCourseList()" class="col col-12 col-sm-6"></app-course-form>
-        <app-cgpa-view (scaleChange)="changeScale($event)" [gradeRange]="gradeRange" [cgpa]="cgpa" [cgpaScale]="cgpaScale" class="col col-12 col-sm-6"></app-cgpa-view>
-    </section>
-    <section class="row">
-        <app-course-list (onUpdate)="refreshCourseList()" [courseList]="courseList"></app-course-list>
-    </section>
-    <div *ngIf="courseList.length" class="row">
-        <div class="col">
-            <button mat-raised-button (click)="clearCourseList()" color="primary">Clear List</button>
-        </div>
-    </div>
-</main>
-<footer>
-    <span>&copy;2020 webdev_wonder</span>
-</footer>
+<div class="main-container">
+    <header class="">
+        <mat-toolbar>
+            <img src="assets/images/logo.png" class="logo" >
+            <span>CGPA Calculator</span>
+        </mat-toolbar>
+    </header>
+    <main class="container-fluid">
+        <section class="row justify-content-center upper-row">
+            <app-course-form (onAlter)="refreshCourseList()" class="col col-12 col-sm-6 col-lg-5"></app-course-form>
+            <app-cgpa-view (scaleChange)="changeScale($event)" [gradeRange]="gradeRange" [cgpa]="cgpa" [cgpaScale]="cgpaScale" class="col col-12 col-sm-6 col-lg-5"></app-cgpa-view>
+        </section>
+        <section class="row">
+            <app-course-list (clear)="clearCourseList()" (onUpdate)="refreshCourseList()" [courseList]="courseList"></app-course-list>
+        </section>
+    </main>
+    <footer>
+        <span>&copy;2020 webdev_wonder</span>
+    </footer>
+</div>
